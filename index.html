@@ -1,0 +1,371 @@
+<meta name='viewport' content='width=device-width, initial-scale=1'/><!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>¡Feliz Cumpleaños Valeska!</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #fce4ec;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding: 20px 0;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 420px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Tarjeta Inicial */
+    .start-card {
+      background: #ffffff;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(233, 30, 99, 0.15);
+      text-align: center;
+      transition: transform 0.5s, opacity 0.5s;
+    }
+
+    .start-card h2 {
+      color: #d81b60;
+      margin-bottom: 20px;
+      font-size: 1.5rem;
+    }
+
+    .btn-enter {
+      background: linear-gradient(135deg, #e91e63, #ec407a);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      border-radius: 25px;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(233, 30, 99, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .btn-enter:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 20px rgba(233, 30, 99, 0.4);
+    }
+
+    /* Contenido Principal */
+    .main-content {
+      width: 100%;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      opacity: 0;
+      transition: opacity 1s ease-in;
+    }
+
+    /* Pastel SVG */
+    .cake-container {
+      margin: 15px 0 25px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .cake-svg {
+      width: 130px;
+      height: 130px;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.1));
+    }
+
+    .flame {
+      animation: flicker 0.6s infinite alternate;
+      transform-origin: center bottom;
+    }
+
+    @keyframes flicker {
+      0% { transform: scale(0.9) rotate(-2deg); opacity: 0.8; }
+      100% { transform: scale(1.1) rotate(2deg); opacity: 1; }
+    }
+
+    /* Polaroid Frame */
+    .polaroid-frame {
+      background: white;
+      padding: 12px 12px 25px 12px;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+      width: 260px;
+      text-align: center;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+      transform: rotate(-2deg);
+      user-select: none;
+    }
+
+    .polaroid-frame:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    .photo-display {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      border-radius: 6px;
+      background-color: #f8bbd0;
+      display: block;
+      transition: opacity 0.2s ease;
+    }
+
+    .photo-caption {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #880e4f;
+      font-weight: 500;
+    }
+
+    /* Tarjeta de Mensaje */
+    .message-card {
+      background: #f8bbd0;
+      border-radius: 18px;
+      padding: 22px;
+      margin-top: 30px;
+      width: 100%;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.06);
+      color: #880e4f;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .message-card p {
+      margin-bottom: 14px;
+    }
+
+    .message-card p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Botón de Música */
+    .music-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: white;
+      border: 2px solid #e91e63;
+      color: #e91e63;
+      width: 45px;
+      height: 45px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      z-index: 100;
+    }
+
+    /* Confeti */
+    .confetti {
+      position: fixed;
+      width: 10px;
+      height: 10px;
+      top: -10px;
+      z-index: 99;
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      to {
+        transform: translateY(105vh) rotate(720deg);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="start-card" id="startCard">
+      <h2>¡Tienes un mensaje especial!</h2>
+      <button class="btn-enter" onclick="openGreeting()">Aprieta aquí</button>
+    </div>
+
+    <div class="main-content" id="mainContent">
+      <div class="cake-container">
+        <svg class="cake-svg" viewBox="0 0 200 200">
+          <ellipse cx="100" cy="170" rx="75" ry="12" fill="#e0e0e0"/>
+          <ellipse cx="100" cy="167" rx="70" ry="10" fill="#ffffff"/>
+          <path d="M 40,130 Q 100,145 160,130 L 160,160 Q 100,175 40,160 Z" fill="#8d6e63"/>
+          <path d="M 40,130 Q 100,145 160,130 L 160,135 Q 100,150 40,135 Z" fill="#d7ccc8"/>
+          <path d="M 50,95 Q 100,110 150,95 L 150,130 Q 100,145 50,130 Z" fill="#5d4037"/>
+          <path d="M 50,95 Q 100,110 150,95 Q 155,110 140,115 Q 130,105 120,118 Q 105,100 90,118 Q 75,105 65,115 Q 50,105 50,95 Z" fill="#f48fb1"/>
+          <rect x="96" y="55" width="8" height="40" rx="3" fill="#fff59d"/>
+          <rect x="96" y="58" width="8" height="6" fill="#ef5350"/>
+          <rect x="96" y="70" width="8" height="6" fill="#ef5350"/>
+          <rect x="96" y="82" width="8" height="6" fill="#ef5350"/>
+          <line x1="100" y1="55" x2="100" y2="47" stroke="#333" stroke-width="2"/>
+          <path class="flame" d="M 100,32 Q 106,42 100,48 Q 94,42 100,32 Z" fill="#ff9800"/>
+          <path class="flame" d="M 100,36 Q 103,42 100,46 Q 97,42 100,36 Z" fill="#ffee58"/>
+        </svg>
+      </div>
+
+      <div class="polaroid-frame" onclick="nextPhoto()">
+        <img id="photo" class="photo-display" src="https://images.unsplash.com/photo-1513151233558-d860c5398176?w=500" alt="Foto especial">
+        <div class="photo-caption">Happy Birthday! 📸 (Toca la foto)</div>
+      </div>
+
+      <div class="message-card">
+        <p><strong>¡Felicidades en tu cumpleaños! Que tengas un día maravilloso 🥳🎉</strong></p>
+        <p>Espero que este nuevo año esté lleno de alegría, amor y muchos momentos inolvidables. Recuerda siempre sonreír, rodearte de quienes te quieren y nunca dejar de soñar. ¡Te mereces lo mejor hoy y siempre!</p>
+        <p>Disfruta tu día al máximo, celebra cada instante y que todos tus deseos se hagan realidad. ¡Feliz cumpleaños!</p>
+      </div>
+    </div>
+  </div>
+
+  <button class="music-btn" id="musicBtn" onclick="toggleAudio()">🎵</button>
+
+  <script>
+    // 💡 REEMPLAZA ESTOS ENLACES POR LOS ENLACES (URLs) DE TUS FOTOS DE IMGBB / IMGUR
+    const photoList = [
+      "https://i.ibb.co/mr4CxVVc/IMG-20260920-171200.jpg",
+      "https://i.ibb.co/twzy7LpX/IMG-20260906-184736.jpg",
+      "https://i.ibb.co/pB9zhxKX/IMG-20260906-184659.jpg",
+      "https://i.ibb.co/Ps5tcvdy/IMG-20260906-184653.jpg",
+      "https://i.ibb.co/NdZMVbX6/IMG-20260731-223010.jpg",
+    ];
+    
+    let currentPhotoIndex = 0;
+    let audioCtx = null;
+    let isPlaying = false;
+    let sequenceTimeout = null;
+
+    window.onload = function() {
+      document.getElementById('photo').src = photoList[0];
+    };
+
+    function openGreeting() {
+      document.getElementById('startCard').style.display = 'none';
+      const mainContent = document.getElementById('mainContent');
+      mainContent.style.display = 'flex';
+      setTimeout(() => {
+        mainContent.style.opacity = '1';
+      }, 50);
+
+      startConfetti();
+      playBirthdaySong();
+    }
+
+    function nextPhoto() {
+      currentPhotoIndex = (currentPhotoIndex + 1) % photoList.length;
+      const photoImg = document.getElementById('photo');
+      photoImg.style.opacity = '0.3';
+      setTimeout(() => {
+        photoImg.src = photoList[currentPhotoIndex];
+        photoImg.style.opacity = '1';
+      }, 150);
+      spawnBurstConfetti();
+    }
+
+    function playBirthdaySong() {
+      if (isPlaying) return;
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      isPlaying = true;
+      document.getElementById('musicBtn').innerText = '🔊';
+
+      const notes = [
+        {f: 264, d: 0.4}, {f: 264, d: 0.4}, {f: 297, d: 0.8}, {f: 264, d: 0.8}, {f: 352, d: 0.8}, {f: 330, d: 1.2},
+        {f: 264, d: 0.4}, {f: 264, d: 0.4}, {f: 297, d: 0.8}, {f: 264, d: 0.8}, {f: 396, d: 0.8}, {f: 352, d: 1.2},
+        {f: 264, d: 0.4}, {f: 264, d: 0.4}, {f: 528, d: 0.8}, {f: 440, d: 0.8}, {f: 352, d: 0.8}, {f: 330, d: 0.8}, {f: 297, d: 0.8},
+        {f: 466, d: 0.4}, {f: 466, d: 0.4}, {f: 440, d: 0.8}, {f: 352, d: 0.8}, {f: 396, d: 0.8}, {f: 352, d: 1.2}
+      ];
+
+      let noteIndex = 0;
+
+      function playNextNote() {
+        if (!isPlaying) return;
+        if (noteIndex >= notes.length) noteIndex = 0;
+
+        const note = notes[noteIndex];
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(note.f, audioCtx.currentTime);
+
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + note.d);
+
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        osc.start();
+        osc.stop(audioCtx.currentTime + note.d);
+
+        noteIndex++;
+        sequenceTimeout = setTimeout(playNextNote, note.d * 1000);
+      }
+
+      playNextNote();
+    }
+
+    function toggleAudio() {
+      if (isPlaying) {
+        isPlaying = false;
+        clearTimeout(sequenceTimeout);
+        if (audioCtx) audioCtx.suspend();
+        document.getElementById('musicBtn').innerText = '🔇';
+      } else {
+        if (audioCtx) {
+          audioCtx.resume();
+          isPlaying = true;
+          playBirthdaySong();
+        } else {
+          playBirthdaySong();
+        }
+        document.getElementById('musicBtn').innerText = '🔊';
+      }
+    }
+
+    function startConfetti() {
+      const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#00bcd4', '#4caf50', '#ffeb3b', '#ff9800'];
+      for (let i = 0; i < 40; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement('div');
+          confetti.className = 'confetti';
+          confetti.style.left = Math.random() * 100 + 'vw';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.animationDuration = (Math.random() * 3 + 2) + 's';
+          document.body.appendChild(confetti);
+
+          setTimeout(() => confetti.remove(), 5000);
+        }, i * 150);
+      }
+    }
+
+    function spawnBurstConfetti() {
+      const colors = ['#e91e63', '#ff4081', '#ffeb3b', '#00e676'];
+      for (let i = 0; i < 15; i++) {
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = (Math.random() * 60 + 20) + 'vw';
+        confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        confetti.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+        document.body.appendChild(confetti);
+
+        setTimeout(() => confetti.remove(), 3500);
+      }
+    }
+  </script>
+</body>
+</html>
